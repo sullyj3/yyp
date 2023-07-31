@@ -10,13 +10,7 @@
       pkgs = nixpkgs.legacyPackages.${system};
     in
     {
-      devShells.default = pkgs.mkShell {
-        packages = [ 
-          pkgs.shellcheck
-          pkgs.bats 
-        ];
-      };
-
+      devShells.default = import ./shell.nix { inherit pkgs; };
       packages.default = pkgs.stdenv.mkDerivation {
         pname = "yyp";
         version = "0.1.0";
