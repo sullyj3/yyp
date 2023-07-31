@@ -8,11 +8,12 @@
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
     in
-    {
+    rec {
       devShells.${system}.default = import ./shell.nix { inherit pkgs; };
       packages.${system}.default = pkgs.callPackage ./yyp.nix {};
-      overlays.default = final: prev: {
+      overlay = final: prev: {
         yyp = final.callPackage ./yyp.nix {};
       };
+      overlays.default = overlay;
     };
 }
