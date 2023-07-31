@@ -14,10 +14,9 @@
         packages.default = pkgs.callPackage ./yyp.nix {};
     })
     //
-    rec {
-      overlay = final: prev: {
-        yyp = final.callPackage ./yyp.nix {};
+    {
+      overlays.default = final: prev: {
+        yyp = prev.callPackage ./yyp.nix {};
       };
-      overlays.default = overlay;
     };
 }
