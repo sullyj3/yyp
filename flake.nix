@@ -1,17 +1,13 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
-    flake-utils.url = "github:numtide/flake-utils";
   };
 
   outputs = { self, nixpkgs, flake-utils, ... }:
-    flake-utils.lib.eachSystem ["x86_64-linux"] (system:
     let
+      system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-    in
-    {
-      devShells.default = import ./shell.nix { inherit pkgs; };
-      packages.default = pkgs.stdenv.mkDerivation {
+      yyp = pkgs.stdenv.mkDerivation {
         pname = "yyp";
         version = "0.1.0";
         src = ./src/yyp.sh;
@@ -28,5 +24,12 @@
           license = licenses.mit;
         };
       };
-    });
+    in
+    {
+      devShells.${system}.default = import ./shell.nix { inherit pkgs; };
+      packages.${system}.default = yyp;
+      # overlays.default = final: prev: {
+      #   inherit yyp;
+      # };
+    };
 }
