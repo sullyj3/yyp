@@ -7,13 +7,12 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-      yyp = pkgs.callPackage ./yyp.nix {};
     in
     {
       devShells.${system}.default = import ./shell.nix { inherit pkgs; };
-      packages.${system}.default = yyp;
-      # overlays.default = final: prev: {
-      #   inherit yyp;
-      # };
+      packages.${system}.default = pkgs.callPackage ./yyp.nix {};
+      overlays.default = final: prev: {
+        yyp = final.callPackage ./yyp.nix {};
+      };
     };
 }
