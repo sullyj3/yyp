@@ -1,10 +1,10 @@
 # YYP - Copy Quicker
 
-A thin wrapper around cp, to decouple the copy and paste steps.
+A thin wrapper around `cp`, to decouple the copy and paste steps.
 
 I consider this to be a UX improvement because:
 - Sometimes you know what you want to copy, but haven't yet thought about where you need to copy it. Decoupling into separate steps means less stuff to think about at once
-- Many tools have been written to make navigating between directories faster (eg zoxide, fzf, broot). Using one of these to jump to your target directory is often easier than typing out either the relative or absolute path of the destination.
+- Many tools have been written to make navigating between directories faster (eg `zoxide`, `fzf`, `broot`). Using one of these to jump to your target directory is often easier than typing out either the relative or absolute path of the destination.
 
 ## Usage
 
