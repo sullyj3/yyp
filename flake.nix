@@ -7,23 +7,7 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-      yyp = pkgs.stdenv.mkDerivation {
-        pname = "yyp";
-        version = "0.1.0";
-        src = ./src/yyp.sh;
-        phases = [ "installPhase" ];
-
-        installPhase = ''
-          mkdir -p $out/bin
-          cp $src $out/bin/yyp
-          chmod +x $out/bin/yyp
-        '';
-
-        meta = with pkgs.lib; {
-          description = "yyp - copy quicker";
-          license = licenses.mit;
-        };
-      };
+      yyp = import ./yyp.nix { inherit pkgs; };
     in
     {
       devShells.${system}.default = import ./shell.nix { inherit pkgs; };
