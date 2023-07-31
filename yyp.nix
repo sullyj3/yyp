@@ -1,5 +1,5 @@
-{ pkgs ? import <nixpkgs> {} }:
-pkgs.stdenv.mkDerivation {
+{ stdenv, lib }:
+stdenv.mkDerivation {
   pname = "yyp";
   version = "0.1.0";
   src = ./src/yyp.sh;
@@ -11,7 +11,7 @@ pkgs.stdenv.mkDerivation {
     chmod +x $out/bin/yyp
   '';
 
-  meta = with pkgs.lib; {
+  meta = with lib; {
     description = "yyp - copy quicker";
     license = licenses.mit;
   };

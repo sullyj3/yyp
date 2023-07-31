@@ -7,7 +7,7 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-      yyp = import ./yyp.nix { inherit pkgs; };
+      yyp = pkgs.callPackage ./yyp.nix {};
     in
     {
       devShells.${system}.default = import ./shell.nix { inherit pkgs; };
