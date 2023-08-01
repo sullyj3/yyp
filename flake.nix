@@ -1,22 +1,20 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
-    flake-utils.url = "github:numtide/flake-utils";
+    flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
-  outputs = { self, nixpkgs, flake-utils, ... }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = nixpkgs.legacyPackages.${system};
-      in
-      {
-        devShells.default = import ./shell.nix { inherit pkgs; };
-        packages.default = pkgs.callPackage ./yyp.nix {};
-    })
-    //
-    {
+  outputs = { self, flake-parts, ... }@inputs:
+  flake-parts.lib.mkFlake { inherit inputs; } {
+    systems = ["x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin"];
+    perSystem = {pkgs, ...}: {
+      devShells.default = import ./shell.nix { inherit pkgs; };
+      packages.default = pkgs.callPackage ./yyp.nix {};
+    };
+    flake = {
       overlays.default = final: prev: {
         yyp = prev.callPackage ./yyp.nix {};
       };
     };
+  };
 }
